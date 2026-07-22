@@ -1,0 +1,38 @@
+{
+  "gesture_rules": [
+    { "name": "thumbs_up", "rule": "thumbs_up", "image": "memes/images/6bd0ce454838e36445c39d964f06d10e.jpg" },
+    { "name": "thumbs_down", "rule": "thumbs_down", "image": "memes/images/31aec7cc57e7b1c68b738e07872a0b49.jpg" },
+    { "name": "peace", "rule": "peace", "image": "memes/images/3e869d26dcbe75a0036dad9cdc6a6481.jpg" },
+    { "name": "open_palm", "rule": "open_palm", "image": "memes/images/lanat.jpg" },
+    { "name": "fist", "rule": "fist", "image": "memes/images/fist.jpg" },
+    { "name": "pointing", "rule": "pointing", "image": "memes/images/pointing.jpg" },
+    { "name": "love_you", "rule": "love_you", "image": "memes/images/love_you.jpg" },
+    { "name": "middle_finger", "rule": "middle_finger", "image": "memes/images/654a0199faceb68005b1ee56c416b93c.jpg" },
+    { "name": "finger_heart", "rule": "finger_heart", "image": "memes/images/finger_heart.jpg" },
+    { "name": "full_heart", "rule": "full_heart", "image": "memes/images/b9f4dcce11a18d1f76ac938aab074ac0.jpg" },
+    { "name": "aap yahan aa jayein", "rule": "welcome_gesture", "image": "memes/images/welcome_gesture.jpg" },
+    { "name": "hands_on_head", "rule": "hands_on_head", "image": "memes/images/4f9f94979268e70817d6f6da43bf2322.jpg" },
+    { "name": "mewing", "rule": "mewing", "image": "memes/images/images.jpg" },
+    { "name": "finger_in_mouth", "rule": "finger_in_mouth", "image": "memes/images/finger_in_mouth.png" },
+    { "name": "hand_on_ear", "rule": "hand_on_ear", "image": "memes/images/d2ba0a936c3ed35365b1a86f57489d92.jpg" },
+    { "name": "shush", "rule": "shush", "image": "memes/images/c8bdeca7ef7278babc4b936178339e88.jpg" },
+    { "name": "six_seven", "rule": "six_seven", "image": "memes/images/six_seven.jpg" }
+  ],
+  "face_rules": [
+    { "name": "mouth_open", "rule": "mouth_open", "image": "memes/images/143392c56dc082dd4ceac16f60d50583.jpg" },
+    { "name": "smile", "rule": "smile", "image": "memes/images/a50b155edb5c730f2eb7a3470663ba02.jpg" },
+    { "name": "teeth", "rule": "teeth", "image": "memes/images/85b17c5f6979ec1f00adaaf0496ceaa7.jpg" },
+    { "name": "eyebrows_raised", "rule": "eyebrows_raised", "image": "memes/images/eada6462dbb21eb0654f2e34726154ee.jpg" },
+    { "name": "wink", "rule": "wink", "image": "memes/images/wink.jpg" },
+    { "name": "eyes_closed", "rule": "eyes_closed", "image": "memes/images/eyes_closed.png" },
+    { "name": "kiss", "rule": "kiss", "image": "memes/images/cd60aa624d175acdff2629f7291940b4.jpg" },
+    { "name": "sad", "rule": "sad", "image": "memes/images/74f13030d50e975419a49b984a098bbb.jpg" }
+  ],
+  "custom_memes": [
+    {
+      "name": "example_custom",
+      "image": "memes/images/example_custom.png",
+      "refs": ["memes/refs/example_custom/ref1.jpg"]
+    }
+  ]
+}

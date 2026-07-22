@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.idea/
+.vscode/
+
+# MediaPipe model bundles (~12MB) - fetch with: python fetch_models.py
+models/*.task
+
+# Meme images are personal/third-party content, not part of the source
+memes/images/*
+memes/refs/*
+!memes/**/.gitkeep
