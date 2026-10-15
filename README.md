@@ -58,10 +58,11 @@ The repo ships with no meme images — `memes_config.json` maps every rule to a 
 
 | Rule | What it looks for |
 |---|---|
+| `absolute_cinema` | both hands raised in the air |
+| `call_me` | thumb and pinky extended, with the other fingers curled |
 | `middle_finger` | middle finger extended, neighbours curled |
 | `finger_heart` | BTS-style thumb-and-index mini heart, one hand |
 | `full_heart` | both hands brought together into a heart |
-| `welcome_gesture` | both hands pointing down together (mapped to "aap yahan aa jayein" in the sample config) |
 | `hands_on_head` | both palms near the forehead — needs face + both hands |
 | `mewing` | index fingertip tracing the jawline |
 | `finger_in_mouth` | index fingertip inside a parted mouth |
@@ -71,7 +72,7 @@ The repo ships with no meme images — `memes_config.json` maps every rule to a 
 
 `mewing`, `finger_in_mouth`, `shush` and `hand_on_ear` are hand-plus-face combos and need both visible. `finger_in_mouth` and `shush` share a touch zone and are split purely by whether the mouth is parted or shut.
 
-**Face expressions from landmark geometry** (`face_rules.py`) — `mouth_open`, `smile`, `teeth`, `kiss`, `sad`, `eyebrows_raised`, `wink`, `eyes_closed`.
+**Face expressions from landmark geometry** (`face_rules.py`) — `mouth_open`, `smile`, `teeth`, `kiss`, `sad`, `eyebrows_raised`, `wink`, `eyes_closed`, `mlem`
 
 **Your own reference photos** (`custom_match.py`) — see [Custom face matching](#custom-face-matching).
 

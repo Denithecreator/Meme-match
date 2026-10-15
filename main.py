@@ -6,10 +6,10 @@ Quit: press 'q' in the camera window.
 Tracks up to 2 hands at once. Add your own memes by editing memes_config.json:
   - gesture_rules: point "image" at a PNG, "rule" must be one of:
     thumbs_up, thumbs_down, peace, open_palm, fist, pointing, love_you (MediaPipe's
-    built-in gesture recognizer, see gesture_map.py), plus middle_finger, finger_heart
-    (BTS-style mini heart, one hand), full_heart, welcome_gesture, hands_on_head
-    (two-hand combos), mewing, finger_in_mouth, hand_on_ear (one-hand + face combos)
-    from custom_gesture.py.
+    built-in gesture recognizer, see gesture_map.py), plus call_me, middle_finger,
+    finger_heart (BTS-style mini heart, one hand), full_heart, welcome_gesture,
+    hands_on_head (two-hand combos), mewing, finger_in_mouth, hand_on_ear
+    (one-hand + face combos) from custom_gesture.py.
   - face_rules: "rule" must be one of face_rules.py's outputs (mouth_open, smile, teeth,
     kiss, eyebrows_raised, wink, eyes_closed). "teeth" is a wide+open mouth geometry
     heuristic (grin), not literal tooth pixel detection. "kiss" uses landmark z-depth
@@ -139,7 +139,7 @@ def main():
         num_faces=1,
     )
 
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         print("Could not open webcam.")
         return

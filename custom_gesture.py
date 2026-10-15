@@ -1,5 +1,5 @@
 """Geometric hand-gesture rules for poses MediaPipe's canned gesture recognizer
-doesn't cover: BTS-style finger heart, middle finger, two-hand full heart.
+doesn't cover: call-me, BTS-style finger heart, middle finger, two-hand full heart.
 
 Landmark indices (MediaPipe Hands, 21 points):
 0 wrist, 4 thumb tip, 8 index tip, 12 middle tip, 16 ring tip, 20 pinky tip
@@ -63,6 +63,15 @@ def classify_hand(lm, handedness_label):
 
     if middle and not index and not ring and not pinky:
         return "middle_finger"
+
+    thumb_extended = _dist(lm[4], lm[0]) > OPEN_LOOSE_RATIO * scale
+    pinky_extended = _dist(lm[20], lm[0]) > OPEN_LOOSE_RATIO * scale
+    other_fingers_folded = all(
+        _dist(lm[tip], lm[mcp]) < EXTENDED_DIST_RATIO * scale
+        for tip, mcp in ((8, 5), (12, 9), (16, 13))
+    )
+    if thumb_extended and pinky_extended and other_fingers_folded:
+        return "call_me"
 
     tip_dist = _dist(lm[4], lm[8]) / scale
     if tip_dist < FINGER_HEART_TIP_DIST_RATIO and not middle and not ring and not pinky:
