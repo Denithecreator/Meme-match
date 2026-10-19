@@ -4,7 +4,6 @@
     { "name": "thumbs_down", "rule": "thumbs_down", "image": "memes/images/thumbs_down.jpg" },
     { "name": "peace", "rule": "peace", "image": "memes/images/peace.jpg" },
     { "name": "open_palm", "rule": "open_palm", "image": "memes/images/open_palm.jpg" },
-    { "name": "fist", "rule": "fist", "image": "memes/images/fist.jpg" },
     { "name": "pointing", "rule": "pointing", "image": "memes/images/pointing.jpg" },
     { "name": "love_you", "rule": "love_you", "image": "memes/images/love_you.jpg" },
     { "name": "middle_finger", "rule": "middle_finger", "image": "memes/images/middle_finger.jpg" },
@@ -13,7 +12,7 @@
     { "name": "hands_on_head", "rule": "hands_on_head", "image": "memes/images/hands_on_head.webp" },
     { "name": "mewing", "rule": "mewing", "image": "memes/images/mewing.jpg" },
     { "name": "finger_in_mouth", "rule": "finger_in_mouth", "image": "memes/images/finger_in_mouth.png" },
-    { "name": "hand_on_ear", "rule": "hand_on_ear", "image": "memes/images/first.jpg" },
+    { "name": "hand_on_ear", "rule": "hand_on_ear", "image": "memes/images/hand_on_ear.jpg" },
     { "name": "shush", "rule": "shush", "image": "memes/images/shush.jpg" },
     { "name": "six_seven", "rule": "six_seven", "image": "memes/images/six_seven.jpg" },
     { "name": "call_me", "rule": "call_me", "image": "memes/images/call_me.jpg" },
@@ -25,7 +24,6 @@
     { "name": "teeth", "rule": "teeth", "image": "memes/images/teeth.jpg" },
     { "name": "eyebrows_raised", "rule": "eyebrows_raised", "image": "memes/images/eyebrows_raised.jpg" },
     { "name": "wink", "rule": "wink", "image": "memes/images/wink.jpg" },
-    { "name": "eyes_closed", "rule": "eyes_closed", "image": "memes/images/first.jpg" },
     { "name": "kiss", "rule": "kiss", "image": "memes/images/kiss.jpg" },
     { "name": "sad", "rule": "sad", "image": "memes/images/sad.jpg" },
     { "name": "mlem", "rule": "mlem", "image": "memes/images/mlem.jpg" }
@@ -33,7 +31,7 @@
   "custom_memes": [
     {
       "name": "example_custom",
-      "image": "memes/images/first.jpg",
+      "image": "memes/images/example_custom.jpg",
       "refs": []
     }
   ]

@@ -12,11 +12,12 @@ FINGER_HEART_TIP_DIST_RATIO = 0.45   # thumb tip / index tip closeness, relative
 FULL_HEART_TIP_DIST_RATIO = 0.7      # cross-hand thumb/index closeness, relative to hand scale
 EXTENDED_DIST_RATIO = 0.6            # tip-to-mcp distance ratio counted as "extended" (direction-agnostic)
 POINT_DOWN_DROP_RATIO = 0.25         # how far below its mcp the index tip must sit to count as "down"
-HAND_ON_HEAD_RADIUS_RATIO = 1.3      # palm-to-forehead distance (x face height) counted as "on head"
+HAND_ON_HEAD_RADIUS_RATIO = 0.5    # palm-to-forehead distance (x face height) counted as "on head"
+HAND_ON_HEAD_MAX_RAISE_RATIO = 0.2  # max height above forehead for hands_on_head
+ABSOLUTE_CINEMA_MIN_CLEARANCE_RATIO = 0.3  # min height above forehead for absolute_cinema
 JAW_TOUCH_RATIO = 0.18               # index fingertip-to-jawline distance (x face height) counted as "touching"
-MOUTH_TOUCH_RATIO = 0.14             # index fingertip-to-mouth-center distance (x face height) counted as "inserted"
-MOUTH_MIN_OPEN_RATIO = 0.015         # min inner-mouth height (x face height) required alongside the touch, so a
-                                      # finger merely resting near closed lips doesn't count
+MOUTH_TOUCH_RATIO = 0.14             # index fingertip-to-mouth-zone distance (x face height) counted as "touching"
+MOUTH_MIN_OPEN_RATIO = 0.015         # min inner-mouth height (x face height) that counts as parted lips
 EAR_TOUCH_RATIO = 0.3                # palm-to-ear-proxy distance (x face height) counted as "on the ear"
 SIX_SEVEN_HEIGHT_DIFF_RATIO = 0.9    # min vertical gap between the two hands (x hand scale) for the 6-7 seesaw
 OPEN_LOOSE_RATIO = 1.4               # tip-to-wrist distance ratio; a folded fist keeps tips near the palm (~1.0x),
@@ -24,6 +25,7 @@ OPEN_LOOSE_RATIO = 1.4               # tip-to-wrist distance ratio; a folded fis
 
 # FaceMesh jaw contour landmarks, left cheek -> chin -> right cheek
 JAW_LANDMARKS = [58, 172, 136, 150, 149, 176, 148, 152, 377, 400, 378, 379, 365, 397, 288]
+MOUTH_LEFT, MOUTH_RIGHT = 61, 291
 MOUTH_TOP, MOUTH_BOTTOM = 13, 14
 # FaceMesh doesn't mesh the ears themselves; the face-oval edge points closest
 # to each ear (cheek/temple height) are used as a proxy anchor.
@@ -158,13 +160,20 @@ def classify_hand_with_face(hand_lm, face_lm):
     if min_jaw_d < JAW_TOUCH_RATIO * face_h:
         return "mewing"
 
-    # Finger at the mouth: tip close to the mouth center either way -- whether
-    # it reads as "inserted" or "shushing" depends on whether the lips are
-    # parted (finger_in_mouth) or pressed shut (shush), same touch zone either way.
+    # When the lips are closed, distinguish a corner touch from a central shush
+    # by which mouth landmark is nearest. A parted mouth keeps the existing
+    # center-touch interpretation as finger_in_mouth.
     mouth_mid = _midpoint(face_lm[MOUTH_TOP], face_lm[MOUTH_BOTTOM])
     mouth_open_h = _dist(face_lm[MOUTH_TOP], face_lm[MOUTH_BOTTOM]) / face_h
-    if _dist(tip, mouth_mid) / face_h < MOUTH_TOUCH_RATIO:
-        return "finger_in_mouth" if mouth_open_h > MOUTH_MIN_OPEN_RATIO else "shush"
+    mouth_mid_d = _dist(tip, mouth_mid) / face_h
+    if mouth_open_h <= MOUTH_MIN_OPEN_RATIO:
+        corner_d = min(
+            _dist(tip, face_lm[i]) / face_h for i in (MOUTH_LEFT, MOUTH_RIGHT)
+        )
+        if min(corner_d, mouth_mid_d) < MOUTH_TOUCH_RATIO:
+            return "finger_in_mouth" if corner_d < mouth_mid_d else "shush"
+    elif mouth_mid_d < MOUTH_TOUCH_RATIO:
+        return "finger_in_mouth"
 
     # Hand on ear: palm near either ear-proxy point (FaceMesh doesn't cover the
     # ears themselves, so the nearest face-oval edge point stands in).
@@ -177,17 +186,27 @@ def classify_hand_with_face(hand_lm, face_lm):
 
 
 def classify_hands_on_head(lm_a, lm_b, face_lm):
-    """Return 'hands_on_head' if both palms rest near the forehead/scalp area.
+    """Classify a two-hand pose as hands_on_head, absolute_cinema, or neither.
 
     FaceMesh only covers the face oval, not the scalp, so this uses the
-    forehead landmark (10) as a proxy anchor with a generous radius.
+    forehead landmark (10) as a proxy anchor. The vertical gap between the
+    thresholds leaves ambiguous raised-hand poses unclassified.
     """
     if face_lm is None:
         return None
-    forehead = face_lm[10]
     face_h = _dist(face_lm[10], face_lm[152]) or 1e-6
-    radius = HAND_ON_HEAD_RADIUS_RATIO * face_h
-    palm_a, palm_b = lm_a[9], lm_b[9]
-    if _dist(palm_a, forehead) < radius and _dist(palm_b, forehead) < radius:
+    forehead = face_lm[10]
+    palms = (lm_a[9], lm_b[9])
+
+    if all(
+        _dist(palm, forehead) < HAND_ON_HEAD_RADIUS_RATIO * face_h
+        and palm.y >= forehead.y - HAND_ON_HEAD_MAX_RAISE_RATIO * face_h
+        for palm in palms
+    ):
         return "hands_on_head"
+
+    min_clearance = ABSOLUTE_CINEMA_MIN_CLEARANCE_RATIO * face_h
+    if all(palm.y < forehead.y - min_clearance for palm in palms):
+        return "absolute_cinema"
+
     return None

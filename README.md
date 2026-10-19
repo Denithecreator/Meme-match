@@ -32,17 +32,37 @@ Camera  ──► MediaPipe GestureRecognizer (2 hands)  ─┐
 
 ## Quick start
 
-Requires Python 3.9+ and a webcam.
+Requires Python 3.9+, a webcam, and a desktop session that can open OpenCV windows.
 
 ```bash
 git clone https://github.com/umaarmirzaa/meme-mirror.git
 cd meme-mirror
-pip install -r requirements.txt
+```
+
+Create and activate a virtual environment:
+
+```bash
+# macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+```powershell
+# Windows PowerShell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+Then install the dependencies, download the MediaPipe models, and start the app:
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 python fetch_models.py
 python main.py
 ```
 
-`fetch_models.py` pulls the two model bundles (~12 MB total) from the official Google MediaPipe bucket into `models/`. They are not committed to the repo.
+`fetch_models.py` needs an internet connection and pulls the two model bundles (~12 MB total) from the official Google MediaPipe bucket into `models/`. They are not committed to the repo. If the camera does not open on macOS, allow camera access for the terminal or app running Python in **System Settings → Privacy & Security → Camera**.
 
 Two windows open: **Camera** (your mirrored feed, landmark overlay, the currently detected label at the top, and a per-hand readout at the bottom-left) and **Meme Match** (the matched image). Press `q` in the Camera window to quit.
 
@@ -58,19 +78,20 @@ The repo ships with no meme images — `memes_config.json` maps every rule to a 
 
 | Rule | What it looks for |
 |---|---|
-| `absolute_cinema` | both hands raised in the air |
+| `absolute_cinema` | both hands raised in the air away from the head - needs face + both hands |
 | `call_me` | thumb and pinky extended, with the other fingers curled |
 | `middle_finger` | middle finger extended, neighbours curled |
 | `finger_heart` | BTS-style thumb-and-index mini heart, one hand |
 | `full_heart` | both hands brought together into a heart |
 | `hands_on_head` | both palms near the forehead — needs face + both hands |
 | `mewing` | index fingertip tracing the jawline |
-| `finger_in_mouth` | index fingertip inside a parted mouth |
+| `finger_in_mouth` | index fingertip placed on the left or right corner of the mouth while closed |
 | `shush` | index fingertip on closed lips |
+| `open_palm` | one palm is flat and open horizontally |
 | `hand_on_ear` | open palm resting near the ear |
 | `six_seven` | the 2025 "6-7" seesaw — see [Limitations](#limitations) |
 
-`mewing`, `finger_in_mouth`, `shush` and `hand_on_ear` are hand-plus-face combos and need both visible. `finger_in_mouth` and `shush` share a touch zone and are split purely by whether the mouth is parted or shut.
+`mewing`, `finger_in_mouth`, `shush` and `hand_on_ear` are hand-plus-face combos and need both visible. With a closed mouth, a fingertip on either mouth corner is `finger_in_mouth`, while a fingertip at the center of the lips is `shush`. A center touch on a parted mouth remains `finger_in_mouth`.
 
 **Face expressions from landmark geometry** (`face_rules.py`) — `mouth_open`, `smile`, `teeth`, `kiss`, `sad`, `eyebrows_raised`, `wink`, `eyes_closed`, `mlem`
 
