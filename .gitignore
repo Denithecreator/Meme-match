@@ -9,6 +9,5 @@ venv/
 models/*.task
 
 # Meme images are personal/third-party content, not part of the source
-memes/images/*
 memes/refs/*
 !memes/**/.gitkeep
