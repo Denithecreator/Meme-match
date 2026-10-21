@@ -1,4 +1,4 @@
-# meme-mirror
+# Meme-match
 
 Your webcam watches your hands and your face. The moment you make a pose it recognizes — thumbs up, middle finger, mewing, a wink, a duck-face — the matching meme pops up in a second window.
 
@@ -35,8 +35,8 @@ Camera  ──► MediaPipe GestureRecognizer (2 hands)  ─┐
 Requires Python 3.9+, a webcam, and a desktop session that can open OpenCV windows.
 
 ```bash
-git clone https://github.com/umaarmirzaa/meme-mirror.git
-cd meme-mirror
+git clone https://github.com/Denithecreator/Meme-match.git
+cd Meme-match
 ```
 
 Create and activate a virtual environment:
